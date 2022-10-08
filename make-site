@@ -1,0 +1,46 @@
+#cleanup
+sudo rm -r /var/www/$1
+sudo rm -r /home/ubuntu/www/$1
+sudo a2dissite $1.conf
+sudo rm /etc/apache2/sites-available/$1.conf
+sudo rm /etc/apache2/sites-available/$1-le-ssl.conf
+
+
+#create a domain name from parameter $1
+domainName=$1 
+
+#copy template to new domain conf file
+cp ./http-template.conf $1.conf
+
+#change template to your domain parameter
+sed -i "s/template-site-name/${domainName}/g" $1.conf
+
+#copy the new file to apache2
+sudo cp $1.conf /etc/apache2/sites-available/$1.conf
+
+#make dir in user www to host the site.
+mkdir /home/ubuntu/www/$1
+mkdir /home/ubuntu/www/$1/public_html
+
+#make dir in /var/www/
+sudo mkdir /var/www/$1
+
+#symlink to ~/www/$1
+sudo ln -s /home/ubuntu/www/$1/public_html /var/www/$1/public_html
+
+#hello
+echo "Hello World" > /home/ubuntu/www/$1/public_html/index.html
+
+
+#enable the site
+sudo a2ensite $1.conf
+
+#refresh apache2
+sudo service apache2 restart
+
+#cleanup 
+rm $1.conf
+
+#secure the https with letsencrypt
+sudo certbot --apache
+
