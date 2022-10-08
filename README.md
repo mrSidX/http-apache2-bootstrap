@@ -11,12 +11,12 @@ This is a script I made to setup an apache2 http endpoint, given the domain name
 this script will clear any apache2 configs of the domain if they exist, and proceed to hoist a generic
 http beginner config file for the site, and setup the folders needed, ready to take the site content.
 
-My config setups up my sites on the user end:   ~/www/domain.com/public_html
-and symlinks that withing /var/www/domain.com/public_html
+My config setups up my sites on the user end:   ```~/www/domain.com/public_html```
+and symlinks that folder within ```/var/www/domain.com/public_html```
+Your scenario may be different.
 
-You can change this...
-
-The script will automatically run 'certbot'.
+The script will automatically run ```certbot --apache``` to run the apache plugin.  Step should be straight forward.
+I choose the redirect option, as Certbot will setup the SSL certs at the end of the script iteration.
 
 You will need to have the certbot apache2 plugin installed.
 
