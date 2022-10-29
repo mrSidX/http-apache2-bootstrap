@@ -2,18 +2,21 @@
 
 Sets up domain for apache2
 
-RUN:   ```./make-site yoursite.com```
+RUN:   ```./make-site mydomain.com```
 
 
 System:  Ubuntu with Apache2
 
-This is a script I made to setup an apache2 http endpoint, given the domain name as a parameter,
-this script will clear any apache2 configs of the domain if they exist, and proceed to hoist a generic
-http beginner config file for the site, and setup the folders needed, ready to take the site content.
+This is a 2 file script and template duo that will copy the generic http settings for routing your Apache2 site.
+This is a specific case for Ubuntu systems, but I'm sure further work down the line can utilize a more universal approach.
 
-My config setups up my sites on the user end:   ```~/www/domain.com/public_html```
-and symlinks that folder within ```/var/www/domain.com/public_html```
-Your scenario may be different.
+This script is geared towards my specific configuration, where I am hosting the website ```public_html``` files in the user folder:
+```/home/ubuntu/www/mydomain.com/public_html/```  and symlinked to the Apache2 folders ```/var/www/mydomain.com/public_html/```
+
+
+Enter your domain stated in the RUN command above.  ie  ```./make-site mydomain.com```
+
+
 
 The script will automatically run ```certbot --apache``` to run the apache plugin.  Step should be straight forward.
 I choose the redirect option, as Certbot will setup the SSL certs at the end of the script iteration.
